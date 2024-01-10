@@ -43,8 +43,7 @@
 
         function clickTabela(cod) {
             document.getElementById("txtCodigo").value = cod;
-            document.getElementById("acaoCRUD").value = "carregar";
-            document.formfunc.submit();
+            document.getElementById("acaoCRUD").value = "funcionario";
         }
     </script>
     <body>
@@ -63,9 +62,7 @@
             <div id="content">
                 <form id="formfunc" name="formfunc" action="principal" method="post">
                 <div class="tituloCadastros">Cadastro de Funcionário</div>
-                <%
-                    Funcionario func = (Funcionario) request.getAttribute("funcionario");
-                %>
+                 <% Funcionario func = (Funcionario) request.getAttribute("funcionario"); %>
                 <br/>
                 <label class="labels" for="txtCodigo">Código</label><input readonly="true" style="background-color: #afafaf " class="inputs" id="txtCodigo" name="txtCodigo" type="text" value="<%=func != null ? func.getCod() : ""%>"/>
                 <br/>
@@ -88,23 +85,29 @@
                 <input type="hidden" id="txtDepartamentoCod" name="txtDepartamentoCod" value="<%=func != null && func.getDepartamento() != null ? func.getDepartamento().getCod() : ""%>"/>
                 
                 <div class="tabela">
-                    <table style="width:100%" border="0">
-                        <thead class="cabecalhoTabela">
-                            <tr><td>Código</td><td>Nome</td><td>Cargo</td><td>Data de Contratação</td><td>Salário</td><td>Departamento</td></tr>
-                        </thead>
-                        <tbody>
-                            <%
-                                List<Funcionario> funcionarios = (List<Funcionario>) request.getAttribute("funcionarios");
-                                for (Funcionario funcLista : funcionarios) {
-                                    out.print(String.format("<tr onClick=\"clickTabela(%d)\" class=\"linhaTabela\">", funcLista.getCod()));
-                                    out.print(String.format("<td class=\"linhaTabela\">%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td>",
-                                        funcLista.getCod(), funcLista.getNome(), funcLista.getCargo(), funcLista.getDtContratacao(), funcLista.getSalario(), funcLista.getDepartamento().getDescricao()));
-                                    out.print("</tr>");
-                                }
-                            %>
-                        </tbody>
-                    </table>
-                </div>
+                           <table style="width:100%" border="0">
+                               <thead class="cabecalhoTabela">
+                                   <tr>
+                                       <td>Código</td>
+                                       <td>Nome</td>
+                                       <td>Cargo</td>
+                                       <td>Data de Contratação</td>
+                                       <td>Salário</td>
+                                       <td>Departamento</td>
+                                   </tr>
+                               </thead>
+                               <tbody>
+                                   <% List<Funcionario> funcionarios = (List<Funcionario>) request.getAttribute("funcionarios");
+                                       for (Funcionario funcLista : funcionarios) {
+                                           out.print(String.format("<tr onClick=\"clickTabela(%d)\" class=\"linhaTabela\">", funcLista.getCod()));
+                                           out.print(String.format("<td class=\"linhaTabela\">%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td>",
+                                               funcLista.getCod(), funcLista.getNome(), funcLista.getCargo(), funcLista.getDtContratacao(), funcLista.getSalario(), funcLista.getDepartamento().getDescricao()));
+                                           out.print("</tr>");
+                                       }
+                                   %>
+                               </tbody>
+                           </table>
+                       </div>
                 
                 </form>    
             </div>

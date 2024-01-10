@@ -94,9 +94,9 @@ public class FuncionarioController {
     }
 
     private void excluir() throws ServletException, IOException {
-        int cod = Integer.parseInt(req.getParameter("cod"));
-        FuncionarioDAO funcionarioDAO = new FuncionarioDAO(conn);
         try {
+            int cod = Integer.parseInt(req.getParameter("txtCodigo")); // Alteração aqui
+            FuncionarioDAO funcionarioDAO = new FuncionarioDAO(conn);
             funcionarioDAO.delete(new Funcionario(cod));
         } catch (Exception ex) {
             ServletPrincipal.dispatcherErro(req, resp, String.format("Não foi possível excluir o funcionário. [%s]", ex.getMessage()));
