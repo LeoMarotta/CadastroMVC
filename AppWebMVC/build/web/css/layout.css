@@ -1,0 +1,268 @@
+/* 
+Document   : layout
+Created on : Oct 4, 2008, 3:29:55 PM
+Author     : mertins
+Description:
+Purpose of the stylesheet follows.
+*/
+
+/* 
+TODO customize this sample style
+Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+body {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    border: 0px;
+    background-color:black;
+    margin:0px;
+    padding:0px;
+    margin-top:5px;
+}
+
+img{
+    float: left; 
+    margin: 0px; 
+    margin-right:5px;
+}
+
+#container {
+    margin:auto;
+    width: 800px; 
+    background: #61799f;
+}
+
+#container2 {
+    margin:auto;
+    width: 800px; 
+    background: #d2dae7;
+}
+
+
+#header {
+    background-color: #f7bd02;
+    height:85px; 
+    font-weight: bolder;
+}
+
+#leftBar {
+    float: left;
+    width: 153px;
+    background-color: #61799f;
+    height:500px;
+    margin:0px;
+    padding:0px;
+}
+
+#contentLogin {
+    position:relative;
+    background-color: #61799f;
+    height:500px;
+}
+
+#content {
+    background-color: #d2dae7;
+    height:500px;
+    overflow:hidden;
+    margin:0px;
+    padding:0px;
+}
+
+#footer {
+    clear:both;
+    background:#f7bd02;
+    text-align: center;
+    padding:0px;
+} 
+
+.tituloPri{
+    color: #599623;
+    font-size: 28px;
+    padding-top:25px;
+    text-align: center;
+}
+
+.tituloSec{
+    color: #599623;
+    font-size: 16px;
+}
+
+#cxLogin{
+    position:absolute;
+    top:130px;
+    left:140px;
+    height:120px;
+    width:250px;
+    background-position: center center;
+    background-color: #f7bd02;
+    color: #024175
+}
+
+#titCxLogin{
+    font-weight: bolder;
+    border-bottom-style: solid;
+    border-bottom-color: #024175;
+    margin-left:10px;
+    margin-right:10px;
+}
+
+#cxErro{
+    position:absolute;
+    top:130px;
+    left:40px;
+    height:40%;
+    width:90%;
+    background-position: center center;
+    background-color: #f7bd02;
+    color: #024175
+}
+
+#titCxErro{
+    font-weight: bolder;
+    border-bottom-style: solid;
+    border-bottom-color: #024175;
+    margin-left:10px;
+    margin-right:10px;
+}
+
+#msgCxErro{
+    margin-left:10px;
+    margin-right:10px;
+}
+
+
+.labelsLogin {
+    float: left;
+    width:70px;
+    margin-left:10px;
+    margin-top:5px;
+}
+
+.inputsLogin {
+    width:140px;
+    margin-top:5px;
+    border-top: 1px solid #555555;
+    border-left: 1px solid #555555;
+    border-bottom: 1px solid #cccccc;
+    border-right: 1px solid #cccccc;
+    height: 15px;
+}
+
+.labelsErro {
+    float: left;
+    width:270px;
+    margin-left:10px;
+    margin-top:5px;
+}
+
+.buttonsLogin{
+    cursor:pointer; 
+    font-size: 10px;
+    border-top: 1px solid #afafaf;
+    border-left: 1px solid #afafaf;
+    border-bottom: 1px solid #afafaf;
+    border-right: 1px solid #afafaf;
+    height: 20px;
+    width:60px;
+    margin:10px;
+    margin-left:80px;
+}
+
+.tituloCadastros {
+    padding-left:10px;
+    padding-top:5px;
+    color:#024175;
+    font-weight: bolder;
+    font-size: 18px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+}
+
+.labels {
+    float: left;
+    width:130px;
+    margin-left:10px;
+    margin-top:5px;
+    color:#024175;
+}
+
+.inputs {
+    width:180px;
+    margin-top:5px;
+    border-top: 1px solid #555555;
+    border-left: 1px solid #555555;
+    border-bottom: 1px solid #cccccc;
+    border-right: 1px solid #cccccc;
+    height: 15px;
+    color:#61799f;
+}
+
+.inputsCombo {
+    width:181px;
+    margin-top:5px;
+    border-top: 1px solid #555555;
+    border-left: 1px solid #555555;
+    border-bottom: 1px solid #cccccc;
+    border-right: 1px solid #cccccc;
+    height: 18px;
+    color:#61799f;
+    
+}
+
+.buttons{
+    cursor:pointer; 
+    font-size: 10px;
+    border-top: 1px solid #afafaf;
+    border-left: 1px solid #afafaf;
+    border-bottom: 1px solid #afafaf;
+    border-right: 1px solid #afafaf;
+    height: 20px;
+    width:60px;
+    margin-left:10px;
+    margin-top:10px;
+}
+
+.menu{
+    margin-top:20px;
+    margin-left:10px;
+    color:#f7bd02;
+    font-weight: bolder;
+}
+
+.menuItem{
+    margin-top:10px;
+    margin-left:20px;
+    color:#fbce7d;
+}
+
+.menuSair{
+    margin-top:50px;
+    margin-left:10px;
+    color:#f7bd02;
+    font-weight: bolder;
+}
+
+.tabela{
+    position:relative;
+    background-color:white;
+    margin-left:10px;
+    width:98%;
+    height:330px;
+    overflow:scroll;
+}
+
+.cabecalhoTabela{
+    background-color:#f7bd02;
+    color: #024175;
+    font-weight: bolder;
+    font-size: 12px;
+}
+
+.linhaTabela{
+    background-color:white;
+    color: #024175;
+    font-size: 12px;
+    text-decoration: underline;
+    cursor:pointer;
+}
