@@ -39,8 +39,8 @@
                 </div>
                 <div class="fl_right">
                     <ul>
-                        <li><a href="#"><img src="images/rss.gif" alt="" border="0" /></a></li>
-                        <li class="last"><a href="#"><img src="images/twitter.gif" alt="" border="0" /></a></li>
+                        <li><a href="#"><img src="images/rss.gif" alt="" border="0" style="width: 99px; height: 99px;"/></a></li>
+                        <li class="last"><a href="#"><img src="images/twitter.gif" alt="" border="0" style="width: 99px; height: 99px;"/></a></li>
                     </ul>
                 </div>
                 <br class="clear" />

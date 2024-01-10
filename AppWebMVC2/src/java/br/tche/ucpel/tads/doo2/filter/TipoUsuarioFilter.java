@@ -43,7 +43,7 @@ public class TipoUsuarioFilter implements Filter {
         try {
             if (autenticado == null || !autenticado) {
                 Context context = new InitialContext();
-                dataSource = (DataSource) context.lookup("jdbc/BaseUCPel");
+                dataSource = (DataSource) context.lookup("jdbc/testeAula");
                 conn = dataSource.getConnection();
                 MensagemDAO msgDAO=new MensagemDAO(conn);
                 List<Mensagem> lista=msgDAO.listaUltimasPublicas(3);
