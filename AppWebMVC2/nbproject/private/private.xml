@@ -4,8 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/leomarotta/GITHUB/CadastroMVC/AppWebMVC2/web/index.jsp</file>
-            <file>file:/home/leomarotta/GITHUB/CadastroMVC/AppWebMVC2/web/styles/index.html</file>
-            <file>file:/home/leomarotta/GITHUB/CadastroMVC/AppWebMVC2/web/images/index.html</file>
+            <file>file:/home/leomarotta/GITHUB/CadastroMVC/AppWebMVC2/web/formerro.jsp</file>
+            <file>file:/home/leomarotta/GITHUB/CadastroMVC/AppWebMVC2/src/java/controle/ServletLogin.java</file>
+            <file>file:/home/leomarotta/GITHUB/CadastroMVC/AppWebMVC2/web/login.jsp</file>
+            <file>file:/home/leomarotta/GITHUB/CadastroMVC/AppWebMVC2/src/java/br/tche/ucpel/tads/doo2/filter/TipoUsuarioFilter.java</file>
         </group>
     </open-files>
 </project-private>

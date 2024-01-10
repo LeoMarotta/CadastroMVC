@@ -25,7 +25,7 @@ import javax.sql.DataSource;
  *
  * @author mertins
  */
-@WebFilter(filterName = "TipoUsuarioFilter", urlPatterns = {"/index.jsp"})
+@WebFilter(filterName = "TipoUsuarioFilter", urlPatterns = {"/*"})
 public class TipoUsuarioFilter implements Filter {
 
     @Override
@@ -33,22 +33,25 @@ public class TipoUsuarioFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+
         Logger log = Logger.getLogger(TipoUsuarioFilter.class.getName());
+
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
+
         Boolean autenticado = (Boolean) req.getSession().getAttribute("UsuarioLogado");
+
         DataSource dataSource = null;
         Connection conn = null;
+
         try {
             if (autenticado == null || !autenticado) {
-                Context context = new InitialContext();
-                dataSource = (DataSource) context.lookup("jdbc/testeAula");
-                conn = dataSource.getConnection();
-                MensagemDAO msgDAO=new MensagemDAO(conn);
-                List<Mensagem> lista=msgDAO.listaUltimasPublicas(3);
-                req.setAttribute("listaMsgs", lista);
-                conn.close();
+                if (!req.getRequestURI().endsWith("/login.jsp")) {
+                    resp.sendRedirect(req.getContextPath() + "/login.jsp");
+                    return;
+                }
             }
             chain.doFilter(request, response);
         } catch (Exception ex) {
@@ -56,7 +59,9 @@ public class TipoUsuarioFilter implements Filter {
             TipoUsuarioFilter.dispatcherErro(req, resp, ex.getMessage());
         } finally {
             try {
-                conn.close();
+                if (conn != null) {
+                    conn.close();
+                }
             } catch (SQLException ex) {
             }
         }

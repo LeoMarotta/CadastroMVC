@@ -19,7 +19,7 @@
             <div id="header">
                 <div id="topnav">
                     <ul>
-                        <li><a href="style-demo.html">Login</a><span>Faça o login para verificar suas mensagens</span></li>
+                        <li><a href="login.jsp">Login</a><span>Faça o login para verificar suas mensagens</span></li>
                         <li class="active"><a href="index.jsp">Página Principal</a></li>
                     </ul>
                 </div>
