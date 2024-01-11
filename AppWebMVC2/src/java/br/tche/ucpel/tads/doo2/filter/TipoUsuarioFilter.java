@@ -43,7 +43,7 @@ public class TipoUsuarioFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
 
-        verificarCookieAutenticacao(req);
+//        verificarCookieAutenticacao(req);
         
         DataSource dataSource = null;
         Connection conn = null;
@@ -81,55 +81,56 @@ public class TipoUsuarioFilter implements Filter {
 
     }
     
-    private void verificarCookieAutenticacao(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("usuarioLogado")) {
-                    String username = cookie.getValue();
-                    // Adicionar lógica para autenticar automaticamente o usuário
-                    UsuarioDAO usuarioDAO = obterUsuarioDAO(request);
-                    try {
-                        Usuario usuario = usuarioDAO.retrieve(username);
-                        if (usuario != null) {
-                            // O usuário foi encontrado, autentique automaticamente
-                            autenticarAutomaticamente(request, usuario);
-                        }
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-    }
-
-    private UsuarioDAO obterUsuarioDAO(HttpServletRequest request) {
-        Connection conn = null;
-        try {
-            Context context = new InitialContext();
-            DataSource dataSource = (DataSource) context.lookup("jdbc/testeAula");
-            conn = dataSource.getConnection();
-            return new UsuarioDAO(conn);
-        } catch (NamingException | SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
-
-    private void autenticarAutomaticamente(HttpServletRequest request, Usuario usuario) {
-        // Adicione a verificação do código de usuário antes de autenticar automaticamente
-        if (usuario.getCod() > 0) {
-            request.getSession().setAttribute("UsuarioLogado", true);
-            request.getSession().setAttribute("codigoUsuario", usuario.getCod());
-            request.getSession().setAttribute("nomeUsuarioLogado", usuario.getLogin());
-        }
-    }
+//    private void verificarCookieAutenticacao(HttpServletRequest request) {
+//        Cookie[] cookies = request.getCookies();
+//        if (cookies != null) {
+//            for (Cookie cookie : cookies) {
+//                if (cookie.getName().equals("usuarioLogado") && cookie.getMaxAge() > 0) {
+//                    String username = cookie.getValue();
+//                    // Adicionar lógica para autenticar automaticamente o usuário
+//                    UsuarioDAO usuarioDAO = obterUsuarioDAO(request);
+//                    try {
+//                        Usuario usuario = usuarioDAO.retrieve(username);
+//                        if (usuario != null) {
+//                            // O usuário foi encontrado, autentique automaticamente
+//                            autenticarAutomaticamente(request, usuario);
+//                        }
+//                    } catch (SQLException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        }
+//    }
+//
+//    private UsuarioDAO obterUsuarioDAO(HttpServletRequest request) {
+//        Connection conn = null;
+//        try {
+//            Context context = new InitialContext();
+//            DataSource dataSource = (DataSource) context.lookup("jdbc/testeAula");
+//            conn = dataSource.getConnection();
+//            return new UsuarioDAO(conn);
+//        } catch (NamingException | SQLException e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                if (conn != null) {
+//                    conn.close();
+//                }
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        return null;
+//    }
+//
+//    private void autenticarAutomaticamente(HttpServletRequest request, Usuario usuario) {
+//        // Adicione a verificação do código de usuário antes de autenticar automaticamente
+//        if (usuario.getCod() > 0) {
+//            request.getSession().setAttribute("UsuarioLogado", true);
+//            request.getSession().setAttribute("codigoUsuario", usuario.getCod());
+//            request.getSession().setAttribute("nomeUsuarioLogado", usuario.getLogin());
+//        }
+//    }
+    
 }
