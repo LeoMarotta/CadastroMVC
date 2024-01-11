@@ -1,10 +1,14 @@
 package controle;
 
+import br.tche.ucpel.bd2.bean.Mensagem;
+import br.tche.ucpel.bd2.dao.MensagemDAO;
 import br.tche.ucpel.bd2.bean.Usuario;
 import br.tche.ucpel.bd2.dao.UsuarioDAO;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -31,14 +35,15 @@ public class ServletLogin extends HttpServlet {
         String password = request.getParameter("Senha");
 
         boolean autenticado = autenticarUsuario(username, password);
-        int codUser = descobrirUsuario(username);
+        int codUser = descobrirUsuario(request.getParameter("Login"));
         
         if (autenticado) {
             request.getSession().setAttribute("UsuarioLogado", true);
             request.getSession().setAttribute("codigoUsuario", codUser);
             request.getSession().setAttribute("nomeUsuarioLogado", username);
-            Cookie cookie = new Cookie("usuarioLogado", username);
-            response.addCookie(cookie);
+            
+            obterMensagensPrivadas(request, codUser);
+            
             response.sendRedirect(request.getContextPath() + "/loginaceito.jsp");
         } else {
             response.sendRedirect(request.getContextPath() + "/login.jsp?erro=true");
@@ -82,4 +87,43 @@ public class ServletLogin extends HttpServlet {
             return usuario.getCod();
         }
     
+        private void obterMensagensPrivadas(HttpServletRequest request, int codUsuario) {
+            DataSource dataSource = null;
+            Connection conn = null;
+
+            try {
+                Context context = new InitialContext();
+                dataSource = (DataSource) context.lookup("jdbc/testeAula");
+                conn = dataSource.getConnection();
+
+                MensagemDAO msgDAO = new MensagemDAO(conn);
+
+                List<Mensagem> todasMensagensPrivadas = msgDAO.listaMensagensComUsuario();
+                List<Mensagem> listaPrivadas = filtrarMensagensPorUsuario(todasMensagensPrivadas, codUsuario);
+
+                request.getSession().setAttribute("listaMsgsPrivadas", listaPrivadas);
+            } catch (NamingException | SQLException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (conn != null) {
+                        conn.close(); 
+                    }
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+        
+        private List<Mensagem> filtrarMensagensPorUsuario(List<Mensagem> mensagens, int codUsuario) {
+            List<Mensagem> mensagensFiltradas = new ArrayList<>();
+
+            for (Mensagem mensagem : mensagens) {
+                if (mensagem.getUsuario().getCod() == codUsuario) {
+                    mensagensFiltradas.add(mensagem);
+                }
+            }
+            return mensagensFiltradas;
+        }
+        
 }

@@ -48,11 +48,8 @@ public class TipoUsuarioFilter implements Filter {
             conn = dataSource.getConnection();
             MensagemDAO msgDAO=new MensagemDAO(conn);
 
-            List<Mensagem> lista=msgDAO.listaUltimasPublicas(10);
+            List<Mensagem> lista=msgDAO.listaUltimasPublicas(3);
             req.getSession().setAttribute("listaMsgs", lista);
-
-            List<Mensagem> listaPrivadas=msgDAO.listaMensagensComUsuario();
-            req.getSession().setAttribute("listaMsgsPrivadas", listaPrivadas);
 
             conn.close();
             chain.doFilter(request, response);

@@ -44,4 +44,21 @@ public class UsuarioDAO {
         pst.close();
         return usrDept;
     }
+    
+    public Usuario retrieveByCod(int cod) throws SQLException {
+        Usuario usrDept = new Usuario();
+        String sql = "SELECT COD, LOGIN, SENHA FROM USUARIO WHERE COD=?";
+        try (PreparedStatement pst = this.conexao.prepareStatement(sql)) {
+            pst.setInt(1, cod);
+            try (ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                    usrDept.setCod(rs.getInt("COD"));
+                    usrDept.setLogin(rs.getString("LOGIN"));
+                    usrDept.setSenha(rs.getString("SENHA"));
+                }
+            }
+        }
+        return usrDept;
+    }
+    
 }
