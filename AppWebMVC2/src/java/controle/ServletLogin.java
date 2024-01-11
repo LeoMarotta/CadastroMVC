@@ -42,6 +42,8 @@ public class ServletLogin extends HttpServlet {
             request.getSession().setAttribute("codigoUsuario", codUser);
             request.getSession().setAttribute("nomeUsuarioLogado", username);
             
+            adicionarCookieAutenticacao(response, username);
+            
             obterMensagensPrivadas(request, codUser);
             
             response.sendRedirect(request.getContextPath() + "/loginaceito.jsp");
@@ -124,6 +126,12 @@ public class ServletLogin extends HttpServlet {
                 }
             }
             return mensagensFiltradas;
+        }
+        
+        private void adicionarCookieAutenticacao(HttpServletResponse response, String username) {
+            Cookie cookie = new Cookie("usuarioLogado", username);
+            cookie.setMaxAge(10 * 60);
+            response.addCookie(cookie);
         }
         
 }
