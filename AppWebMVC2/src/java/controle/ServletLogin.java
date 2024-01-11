@@ -31,9 +31,11 @@ public class ServletLogin extends HttpServlet {
         String password = request.getParameter("Senha");
 
         boolean autenticado = autenticarUsuario(username, password);
-
+        int codUser = descobrirUsuario(username);
+        
         if (autenticado) {
             request.getSession().setAttribute("UsuarioLogado", true);
+            request.getSession().setAttribute("codigoUsuario", codUser);
             request.getSession().setAttribute("nomeUsuarioLogado", username);
             Cookie cookie = new Cookie("usuarioLogado", username);
             response.addCookie(cookie);
@@ -60,4 +62,24 @@ public class ServletLogin extends HttpServlet {
         }
         return false;
     }
+
+        private int descobrirUsuario(String username) {
+            Usuario usuario = null;
+            try {
+                Context context = new InitialContext();
+                DataSource dataSource = (DataSource) context.lookup("jdbc/testeAula");
+                Connection conn = dataSource.getConnection();
+
+                UsuarioDAO usuarioDAO = new UsuarioDAO(conn);
+
+                usuario = usuarioDAO.retrieve(username);
+                conn.close();
+                return usuario.getCod();
+
+            } catch (NamingException | SQLException e) {
+                e.printStackTrace();
+            }
+            return usuario.getCod();
+        }
+    
 }

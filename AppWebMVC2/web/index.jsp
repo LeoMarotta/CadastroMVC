@@ -50,7 +50,7 @@
             <div id="latest">
                 <ul>
                     <%
-                        List<Mensagem> lista = (List<Mensagem>) request.getAttribute("listaMsgs");
+                        List<Mensagem> lista = (List<Mensagem>) session.getAttribute("listaMsgs");
                         int count=0;
                         for (Mensagem msg : lista) {
                     %>

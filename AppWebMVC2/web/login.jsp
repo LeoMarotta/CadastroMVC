@@ -72,10 +72,6 @@
         <label for="Senha">Senha:</label>
         <input type="password" id="Senha" name="Senha" required>
 
-        <c:if test="${param.erro eq 'true'}">
-            <p class="error-message">Credenciais inválidas. Tente novamente.</p>
-        </c:if>
-
         <input type="submit" value="Login">
     </form>
 </body>

@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Logger;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.servlet.Filter;
@@ -37,27 +36,25 @@ public class TipoUsuarioFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) 
             throws IOException, ServletException {
         
-        Logger log = Logger.getLogger(TipoUsuarioFilter.class.getName());
-        
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
-        
-        Boolean autenticado = (Boolean) req.getSession().getAttribute("UsuarioLogado");
-        
+
         DataSource dataSource = null;
         Connection conn = null;
         
         try {
-            if (autenticado == null || !autenticado) {
-                Context context = new InitialContext();
-                dataSource = (DataSource) context.lookup("jdbc/testeAula");
-                conn = dataSource.getConnection();
-                MensagemDAO msgDAO=new MensagemDAO(conn);
-                List<Mensagem> lista=msgDAO.listaUltimasPublicas(10);
-                req.setAttribute("listaMsgs", lista);
-                conn.close();
-            }
-            
+            Context context = new InitialContext();
+            dataSource = (DataSource) context.lookup("jdbc/testeAula");
+            conn = dataSource.getConnection();
+            MensagemDAO msgDAO=new MensagemDAO(conn);
+
+            List<Mensagem> lista=msgDAO.listaUltimasPublicas(10);
+            req.getSession().setAttribute("listaMsgs", lista);
+
+            List<Mensagem> listaPrivadas=msgDAO.listaMensagensComUsuario();
+            req.getSession().setAttribute("listaMsgsPrivadas", listaPrivadas);
+
+            conn.close();
             chain.doFilter(request, response);
         } catch (Exception ex) {
             ex.printStackTrace();

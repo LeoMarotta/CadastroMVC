@@ -2,6 +2,7 @@ package br.tche.ucpel.bd2.dao;
 
 import br.tche.ucpel.bd2.bean.Mensagem;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -39,4 +40,24 @@ public class MensagemDAO {
         st.close();
         return lista;
     }
+    
+    public List<Mensagem> listaMensagensComUsuario() throws SQLException {
+        List<Mensagem> lista = new ArrayList<>();
+        String sql = "SELECT COD, TITULO, TEXTO, LINK FROM MENSAGEM WHERE CODUSUARIO IS NOT NULL ORDER BY COD DESC";
+
+        try (PreparedStatement ps = this.conexao.prepareStatement(sql)) {
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Mensagem elem = new Mensagem();
+                    elem.setCod(rs.getInt("COD"));
+                    elem.setTitulo(rs.getString("TITULO"));
+                    elem.setTexto(rs.getString("TEXTO"));
+                    elem.setLink(rs.getString("LINK"));
+                    lista.add(elem);
+                }
+            }
+        }
+        return lista;
+    }
+
 }
