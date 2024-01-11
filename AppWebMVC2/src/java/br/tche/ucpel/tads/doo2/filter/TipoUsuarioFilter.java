@@ -25,7 +25,8 @@ import javax.sql.DataSource;
  *
  * @author mertins
  */
-@WebFilter(filterName = "TipoUsuarioFilter", urlPatterns = {"/*"})
+
+@WebFilter(filterName = "TipoUsuarioFilter", urlPatterns = {"/index.jsp"})
 public class TipoUsuarioFilter implements Filter {
 
     @Override
@@ -33,35 +34,37 @@ public class TipoUsuarioFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) 
             throws IOException, ServletException {
-
+        
         Logger log = Logger.getLogger(TipoUsuarioFilter.class.getName());
-
+        
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
-
+        
         Boolean autenticado = (Boolean) req.getSession().getAttribute("UsuarioLogado");
-
+        
         DataSource dataSource = null;
         Connection conn = null;
-
+        
         try {
             if (autenticado == null || !autenticado) {
-                if (!req.getRequestURI().endsWith("/login.jsp")) {
-                    resp.sendRedirect(req.getContextPath() + "/login.jsp");
-                    return;
-                }
+                Context context = new InitialContext();
+                dataSource = (DataSource) context.lookup("jdbc/testeAula");
+                conn = dataSource.getConnection();
+                MensagemDAO msgDAO=new MensagemDAO(conn);
+                List<Mensagem> lista=msgDAO.listaUltimasPublicas(10);
+                req.setAttribute("listaMsgs", lista);
+                conn.close();
             }
+            
             chain.doFilter(request, response);
         } catch (Exception ex) {
             ex.printStackTrace();
             TipoUsuarioFilter.dispatcherErro(req, resp, ex.getMessage());
         } finally {
             try {
-                if (conn != null) {
-                    conn.close();
-                }
+                conn.close();
             } catch (SQLException ex) {
             }
         }

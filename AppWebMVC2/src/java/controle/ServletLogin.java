@@ -10,6 +10,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,6 +34,9 @@ public class ServletLogin extends HttpServlet {
 
         if (autenticado) {
             request.getSession().setAttribute("UsuarioLogado", true);
+            request.getSession().setAttribute("nomeUsuarioLogado", username);
+            Cookie cookie = new Cookie("usuarioLogado", username);
+            response.addCookie(cookie);
             response.sendRedirect(request.getContextPath() + "/loginaceito.jsp");
         } else {
             response.sendRedirect(request.getContextPath() + "/login.jsp?erro=true");
@@ -48,7 +52,7 @@ public class ServletLogin extends HttpServlet {
             UsuarioDAO usuarioDAO = new UsuarioDAO(conn);
 
             Usuario usuario = usuarioDAO.retrieve(username);
-
+            conn.close();
             return usuario != null && usuario.getSenha().equals(password);
 
         } catch (NamingException | SQLException e) {
@@ -56,10 +60,4 @@ public class ServletLogin extends HttpServlet {
         }
         return false;
     }
-    
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }
