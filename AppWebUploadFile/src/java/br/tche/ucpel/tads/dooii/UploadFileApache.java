@@ -2,6 +2,7 @@ package br.tche.ucpel.tads.dooii;
 
 import br.tche.ucpel.bd2.bean.Arquivo;
 import br.tche.ucpel.bd2.dao.ArquivoDAO;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,21 +27,10 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 /**
- * Sequência a Tabela necessárias:
- *
- * create sequence sequpload;
- *
- * create table upload (
- *        id numeric(6) default nextval('sequpload'),
- *        dtcadastro timestamp default now(),
- *        nome varchar(200),
- *        contenttype varchar(200),
- *        conteudo bytea,
- *        primary key(id)
- * );
  *
  * @author mertins
  */
+
 @WebServlet(name = "uploadFileApache", urlPatterns = {"/uploadFileApache"})
 public class UploadFileApache extends HttpServlet {
 
@@ -90,7 +80,7 @@ public class UploadFileApache extends HttpServlet {
     }
 
     private void gravaFile(String valorDoParametro, String fileName, FileItem item) throws IOException, Exception {
-        File arquivo = new File(String.format("/home/mertins/temp/%s_%s", valorDoParametro, fileName));
+        File arquivo = new File(String.format("/home/leomarotta/Documentos/%s_%s", valorDoParametro, fileName));
         arquivo.createNewFile();
         item.write(arquivo);
         Logger.getLogger(UploadFileApache.class.getName()).log(Level.INFO, String.format("Gravou no Arquivo [%s]", String.format("%s_%s", valorDoParametro, fileName)));
@@ -100,7 +90,7 @@ public class UploadFileApache extends HttpServlet {
         Connection conn = null;
         try {
             Context context = new InitialContext();
-            DataSource dataSource = (DataSource) context.lookup("jdbc/BaseUCPel");
+            DataSource dataSource = (DataSource) context.lookup("jdbc/testeAula");
             conn = dataSource.getConnection();
             ArquivoDAO dao= new ArquivoDAO(conn);
             Arquivo arq=new Arquivo();

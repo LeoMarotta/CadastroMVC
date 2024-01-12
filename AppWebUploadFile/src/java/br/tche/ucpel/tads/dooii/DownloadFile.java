@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author mertins
  */
+
 @WebServlet(name = "DownloadFile", urlPatterns = {"/downloadFile"})
 public class DownloadFile extends HttpServlet {
 
