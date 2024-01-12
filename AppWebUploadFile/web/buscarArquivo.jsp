@@ -33,6 +33,5 @@
                     <td><input name="save" type="submit" value="Buscar do Servidor" /></td>
                 </tr>
             </table>
-        </form>
     </body>
 </html>
